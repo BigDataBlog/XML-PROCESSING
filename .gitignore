@@ -16,3 +16,5 @@ XML-KAFKA-PRODUCER/XML-KAFKA-PRODUCER/target/test-classes/org/thegreenseek/sampl
 XML-KAFKA-PRODUCER/XML-KAFKA-PRODUCER/target/test-classes/org/thegreenseek/samples/kafka/xml/XMLKafkaProducer$Test$$anonfun$1$$anonfun$apply$mcV$sp$1.class
 
 XML-KAFKA-PRODUCER/XML-KAFKA-PRODUCER/target/test-classes/org/thegreenseek/samples/kafka/xml/XMLKafkaProducer$Test.class
+
+XML-KAFKA-PRODUCER/.idea
