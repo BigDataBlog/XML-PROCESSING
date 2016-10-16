@@ -21,10 +21,17 @@ object KafkaUtilities {
   }
 }
 
+<<<<<<< Updated upstream
 /*class KafkaCore (props: Properties) {
   var cprops = props != null ? props : {
     var dprops = new Properties()
   }
+=======
+class KafkaCore (props: Properties) {
+  //var cprops = props != null ? props : {
+  //  var dprops = new Properties()
+  //}
+>>>>>>> Stashed changes
 
 
 }*/
