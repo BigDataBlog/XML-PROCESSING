@@ -39,11 +39,7 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     XMLKafkaProducer.parseXmlFile(
-<<<<<<< Updated upstream
-        "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/XML-KAFKA-PRODUCER/data/landsat-medium.b.xml",
-=======
-        "/Users/Celine/Documents/dev/repo/XML-PROCESSING/XML-KAFKA-PRODUCER/XML-KAFKA-PRODUCER/data/landsat-small.xml",
->>>>>>> Stashed changes
+      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-medium.b.xml"",
         printMessage,
         null,
         buf,
