@@ -39,12 +39,8 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     XMLKafkaProducer.parseXmlFile(
-      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-medium.b.xml"",
-        printMessage,
-        null,
-        buf,
-        topic
-      )
+      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-medium.b.xml", printMessage, null, buf, topic
+    )
 
   }
 
