@@ -50,22 +50,12 @@
             <artifactId>kafka-clients</artifactId>
             <version>0.10.0.0</version>
         </dependency>
-        <!--dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-            <version>3.0.0</version>
-        </dependency-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.11</artifactId>
             <version>0.10.0.0</version>
             <scope>provided</scope>
         </dependency>
-        <!--dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
-            <version>2.2.6</version>
-        </dependency-->
         <dependency>
             <groupId>org.scalactic</groupId>
             <artifactId>scalactic_2.11</artifactId>
@@ -141,15 +131,6 @@
                 </execution>
               </executions>
             </plugin>
-            <!--plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.1</version>
-                <configuration>
-                    <ccTestGoals>scatatest:test</ccTestGoals>
-                </configuration>
-            </plugin-->
-
         </plugins>
     </build>
 </project>
