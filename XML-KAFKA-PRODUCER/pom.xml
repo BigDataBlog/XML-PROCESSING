@@ -8,7 +8,9 @@
     <artifactId>xml-kafka-producer</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
+        <!-- Will used y the tests to get the xml data-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <data.test.resources>${project.build.directory}/data</data.test.resources>
     </properties>
     <repositories>
         <repository>
@@ -69,7 +71,44 @@
         </dependency>
     </dependencies>
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-test-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>test</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/data</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/data</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
@@ -78,6 +117,12 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
                             <goal>testCompile</goal>
                         </goals>
                     </execution>
