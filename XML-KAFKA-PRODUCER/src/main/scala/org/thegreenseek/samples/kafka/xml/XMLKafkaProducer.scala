@@ -51,7 +51,7 @@ object XMLKafkaProducer {
     // End Local Send Function
 
     val xmlFile = args(0)
-    parseXmlFile(xmlFile, sendMessage, producer, buf, topic )
+    parseXmlAndSendMessage(xmlFile, sendMessage, producer, buf, topic )
 
 
   }
