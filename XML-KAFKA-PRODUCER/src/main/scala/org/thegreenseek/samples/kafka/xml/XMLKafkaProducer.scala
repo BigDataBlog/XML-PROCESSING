@@ -58,10 +58,12 @@ object XMLKafkaProducer {
 
   /**
     * Dedicated to Landsat model parsing
-    * Parse XML file as events
+    * Parse XML file as events and
+    * sends message using the provided send method:
+    * it optimizes resources usage
     * @param xmlFile
     */
-   def parseXmlFile (xmlFile: String, send: (Any, ArrayBuffer[String], String) => Int, cproducer: Any, cbuf: ArrayBuffer[String], ctopic: String): Unit = {
+   def parseXmlAndSendMessage (xmlFile: String, send: (Any, ArrayBuffer[String], String) => Int, cproducer: Any, cbuf: ArrayBuffer[String], ctopic: String): Unit = {
 
      val xml = new XMLEventReader(Source.fromFile(xmlFile))
 
