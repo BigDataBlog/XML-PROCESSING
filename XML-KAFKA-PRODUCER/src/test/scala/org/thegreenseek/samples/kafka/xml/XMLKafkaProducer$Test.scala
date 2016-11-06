@@ -39,17 +39,18 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-medium.b.xml", printMessage, null, buf, topic
+      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, buf, topic
     )
 
   }
 
   test("testLoadDefaultProperties") {
-    var defProps = KafkaUtilities.loadDefaultProperties
-    assert(defProps != null)
 
-    if(defProps != null) {
-      defProps.asInstanceOf[Properties].asScala.toMap.foreach(item => println(item._1) + " : " + println(item._2))
+    var defProps = KafkaUtilities.loadDefaultProperties
+    assert(defProps.isDefined)
+
+    if(defProps.isDefined) {
+      defProps.foreach(props => props.asScala.toMap.foreach(item => println(item._1) + " : " + println(item._2)))
     }
 
   }

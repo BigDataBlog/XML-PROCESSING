@@ -2,6 +2,7 @@ package org.thegreenseek.samples.kafka.fwk
 
 import java.util.Properties
 import java.io.{FileInputStream, IOException}
+import scala.util.Properties
 
 /**
   * Created by Macphil11 on 12/08/2016.
@@ -23,16 +24,3 @@ object KafkaUtilities {
   }
 }
 
-/*class KafkaCore (props: Properties) {
-  var cprops = props != null ? props : {
-    var dprops = new Properties()
-  }
-=======
-class KafkaCore (props: Properties) {
-  //var cprops = props != null ? props : {
-  //  var dprops = new Properties()
-  //}
->>>>>>> Stashed changes
-
-
-}*/
