@@ -5,7 +5,8 @@ import java.util.Properties
 import org.apache.kafka.clients.producer._
 
 /**
-  * Created by Macphil1 on 29/10/2016.
+  * Created by Macphil1 on 29/10/2016.d of property update is useless
+  * @param nProperties TODO this kin
   */
 class KafkaFramework (nProperties: Properties){
 
@@ -26,7 +27,7 @@ class KafkaFramework (nProperties: Properties){
     lProperties = nProperties
 
     if(null == lProperties)
-      lProperties = KafkaUtilities.loadDefaultProperties.head //Use default producer
+      lProperties = KafkaUtilities.loadDefaultProducerProperties.head //Use default producer
 
 
     if(null != topic && null != message) {
@@ -37,6 +38,15 @@ class KafkaFramework (nProperties: Properties){
       return 0
     }
     return -1
+  }
+
+  /**
+    * Consume messages from the specified topic with autocommit true.
+    * @param topicName
+    * @param handle this method witll handle the consumed messages
+    */
+  def readAutocommit(topicName: String, handle:(Int,String, Any ) => Int): Unit = {
+
   }
 
   /**

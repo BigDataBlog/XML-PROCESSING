@@ -9,21 +9,41 @@ import java.io.{FileInputStream, IOException}
   * @return Some or None
   */
 object KafkaUtilities {
-  def loadDefaultProperties: Option[Properties] = {
+  def loadDefaultProducerProperties: Option[Properties] = {
     val dprops = new Properties()
     try {
-        val inpropsFile = KafkaUtilities.getClass.getResourceAsStream("/DefaultKafkaProperties.xml")
+        val inpropsFile = KafkaUtilities.getClass.getResourceAsStream("/DefaultKafkaProducerProperties.xml")
         if(Option(inpropsFile).isDefined)
           dprops.loadFromXML(inpropsFile)
         else
-          throw new KafkaLoadPropertiesException("DefaultKafkaProperties.xml not found")
+          throw new KafkaLoadPropertiesException("DefaultKafkaProducerProperties.xml not found")
       return Option(dprops)
     } catch {
       case ioex: IOException => {
-        println("COULD NOT LOAD DEFAULT KAFKA PROPS")
+        println("COULD NOT LOAD DEFAULT KAFKA PRODUCER PROPS")
       }
       case propsex: KafkaLoadPropertiesException => {
-        println("KAFKA PROPERTIES NOT FOUND")
+        println("KAFKA PRODUCER PROPERTIES NOT FOUND")
+      }
+    }
+    return None
+  }
+
+  def loadDefaultConsumerProperties: Option[Properties] = {
+    val dprops = new Properties()
+    try {
+      val inpropsFile = KafkaUtilities.getClass.getResourceAsStream("/DefaultKafkaConsumerProperties.xml")
+      if(Option(inpropsFile).isDefined)
+        dprops.loadFromXML(inpropsFile)
+      else
+        throw new KafkaLoadPropertiesException("DefaultKafkaConsumerProperties.xml not found")
+      return Option(dprops)
+    } catch {
+      case ioex: IOException => {
+        println("COULD NOT LOAD DEFAULT KAFKA CONSUMER PROPS")
+      }
+      case propsex: KafkaLoadPropertiesException => {
+        println("KAFKA CONSUMER PROPERTIES NOT FOUND")
       }
     }
     return None

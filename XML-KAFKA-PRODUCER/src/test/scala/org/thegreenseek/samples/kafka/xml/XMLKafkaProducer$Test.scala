@@ -46,7 +46,7 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
 
   test("testLoadDefaultProperties") {
 
-    var defProps = KafkaUtilities.loadDefaultProperties
+    var defProps = KafkaUtilities.loadDefaultProducerProperties
     assert(defProps.isDefined)
 
     if(defProps.isDefined) {
