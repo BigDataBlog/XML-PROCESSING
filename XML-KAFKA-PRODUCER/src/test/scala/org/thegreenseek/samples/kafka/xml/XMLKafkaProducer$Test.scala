@@ -28,18 +28,17 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     */
   test("testParseXmlFile") {
 
-    val buf = ArrayBuffer[String]()
     val topic: String = "landsat"
 
-    def printMessage (prod: Any, cbuf: ArrayBuffer[String], ctopic:String): Int = {
+    def printMessage (prod: Any, ctopic:String, cmessage:String): Int = {
         println("BUFFER PRINT START")
-        println(cbuf.toString())
+        println(cmessage)
         println("BUFFER PRINT END")
         return 0
     }
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, buf, topic
+      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, topic
     )
 
   }

@@ -23,7 +23,7 @@ object XMLKafkaProducer {
 
   def main(args: Array[String]) {
 
-    val buf = ArrayBuffer[String]()
+
     val topic: String = "landsat"
 
     // Debug
@@ -45,13 +45,13 @@ object XMLKafkaProducer {
     // End producer initialization
 
     // Local Send function --> will use a special producer to send the buffer
-    def sendMessage (prod: Any, cbuf: ArrayBuffer[String], ctopic:String) : Int = {
-      prod.asInstanceOf[KafkaStringProducer].sendRecord(ctopic, cbuf.toString())
+    def sendMessage (prod: Any, ctopic:String, cmessage: String) : Int = {
+      prod.asInstanceOf[KafkaStringProducer].sendRecord(ctopic, cmessage)
     }
     // End Local Send Function
 
     val xmlFile = args(0)
-    parseXmlAndSendMessage(xmlFile, sendMessage, producer, buf, topic )
+    parseXmlAndSendMessage(xmlFile, sendMessage, producer, topic )
 
 
   }
@@ -61,10 +61,16 @@ object XMLKafkaProducer {
     * Parse XML file as events and
     * sends message using the provided send method:
     * it optimizes resources usage
+    * TODO : test if the send method exist
     * @param xmlFile
+    * @param send A signature of the method that will send the record to Kafka
+    * @param producer A potential producer to send the record
+    * @param ctopic the Kafka Topic to send the messag to
     */
-   def parseXmlAndSendMessage (xmlFile: String, send: (Any, ArrayBuffer[String], String) => Int, cproducer: Any, cbuf: ArrayBuffer[String], ctopic: String): Unit = {
+   def parseXmlAndSendMessage (xmlFile: String, send: (Any, String, String) => Int, producer: Any, ctopic: String): Unit = {
 
+     val cbuf = ArrayBuffer[String]()
+     // TODO : manage exception for XML file not found
      val xml = new XMLEventReader(Source.fromFile(xmlFile))
 
      for (event <- xml) {
@@ -80,7 +86,8 @@ object XMLKafkaProducer {
            inMetadata = false
 
            // send message
-           send(cproducer, cbuf, ctopic)
+           if(Some(send).isDefined)
+            send(producer, ctopic, cbuf.toString())
            // end send message
            cbuf.clear
          }
