@@ -3,11 +3,12 @@ package org.thegreenseek.samples.kafka.xml
 import java.util.Properties
 
 import org.thegreenseek.samples.kafka.fwk
-
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
-import org.thegreenseek.samples.kafka.fwk.KafkaUtilities
+import org.thegreenseek.samples.kafka.fwk.{KafkaFramework, KafkaUtilities}
+
 import scala.collection.mutable.ArrayBuffer
-import java.io.{InputStreamReader, BufferedReader, InputStream}
+import java.io.{BufferedReader, InputStream, InputStreamReader}
+
 import scala.collection.JavaConverters._
 
 /**
@@ -24,9 +25,9 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
   }
 
   /**
-    * Test testParseXmlFile
+    * Test parseXmlAndSendMessage
     */
-  test("testParseXmlFile") {
+  test("parseXmlAndSendMessage") {
 
     val topic: String = "landsat"
 
@@ -51,6 +52,17 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     if(defProps.isDefined) {
       defProps.foreach(props => props.asScala.toMap.foreach(item => println(item._1) + " : " + println(item._2)))
     }
+
+  }
+
+  test("parseXmlAndSendMessage" + "KafkaFramework.sendStringRecord") {
+    val topic: String = "landsat"
+    val fwk = new KafkaFramework(null)
+
+    XMLKafkaProducer.parseXmlAndSendMessage(
+      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml",
+      fwk.sendStringRecord, null, topic
+    )
 
   }
 

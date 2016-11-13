@@ -9,6 +9,8 @@ import org.apache.kafka.clients.producer._
   */
 class KafkaFramework (nProperties: Properties){
 
+  var lProperties = new Properties()
+
   /**
     * this message sender function will be used by file parsers
     * to feed kafka topics
@@ -21,13 +23,14 @@ class KafkaFramework (nProperties: Properties){
     */
   def sendStringRecord( prod: Any, topic: String, message: String): Int = {
 
-    var lProperties = new Properties()
+    lProperties = nProperties
 
-    if(!Some(nProperties).isDefined)
+    if(null == lProperties)
       lProperties = KafkaUtilities.loadDefaultProperties.head //Use default producer
 
-    if(Some(topic).isDefined && Some(message).isDefined ) {
-      val record = new ProducerRecord[String, String](topic, null, message)
+
+    if(null != topic && null != message) {
+      val record = new ProducerRecord[String, String](topic, System.currentTimeMillis().toString, message)
       val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](lProperties)
       producer.send(record)
 
