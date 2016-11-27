@@ -6,32 +6,31 @@ import org.apache.kafka.clients.producer._
 
 /**
   * Created by Macphil1 on 29/10/2016.d of property update is useless
-  * @param nProperties TODO this kin
   */
-class KafkaFramework (nProperties: Properties){
-
-  var lProperties = new Properties()
+class KafkaFramework {
 
   /**
     * this message sender function will be used by file parsers
     * to feed kafka topics
     * Version without key
     * TODO : investigate the usage of keys in ProducerRecords
-    * @param prod
     * @param topic
     * @param message
     * @return information telling if anything went wrong
     */
-  def sendStringRecord( prod: Any, topic: String, message: String): Int = {
+  def sendStringRecord( topic: String, message: String, sPropertiesSend: String): Int = {
 
-    lProperties = nProperties
+    var lProperties = new Properties()
 
-    if(null == lProperties)
+    if(null == sPropertiesSend)
       lProperties = KafkaUtilities.loadDefaultProducerProperties.head //Use default producer
+    else
+      lProperties = KafkaUtilities.loadProperties(sPropertiesSend).head
 
 
-    if(null != topic && null != message) {
+    if(null !=lProperties && null != topic && null != message) {
       val record = new ProducerRecord[String, String](topic, System.currentTimeMillis().toString, message)
+      //val record = new ProducerRecord[String, String](topic, message)
       val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](lProperties)
       producer.send(record)
 

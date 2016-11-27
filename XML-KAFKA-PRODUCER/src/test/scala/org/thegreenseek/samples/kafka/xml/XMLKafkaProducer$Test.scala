@@ -31,7 +31,8 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
 
     val topic: String = "landsat"
 
-    def printMessage (prod: Any, ctopic:String, cmessage:String): Int = {
+    // This will be delegated the print of messages to stdout
+    def printMessage (ctopic:String, cmessage:String, cprops:String): Int = {
         println("BUFFER PRINT START")
         println(cmessage)
         println("BUFFER PRINT END")
@@ -39,12 +40,12 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, topic
+      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, topic
     )
 
   }
 
-  test("testLoadDefaultProperties") {
+  test("testLoadDefaultProducerProperties") {
 
     var defProps = KafkaUtilities.loadDefaultProducerProperties
     assert(defProps.isDefined)
@@ -57,10 +58,10 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
 
   test("parseXmlAndSendMessage" + "KafkaFramework.sendStringRecord") {
     val topic: String = "landsat"
-    val fwk = new KafkaFramework(null)
+    val fwk = new KafkaFramework()
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml",
+      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml",
       fwk.sendStringRecord, null, topic
     )
 

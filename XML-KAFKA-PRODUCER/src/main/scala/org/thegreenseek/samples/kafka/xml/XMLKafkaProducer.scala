@@ -19,42 +19,6 @@ object XMLKafkaProducer {
 
   var inMetadata = false
 
-  //var metaDataTag = "metadata"
-
-  def main(args: Array[String]) {
-
-
-    val topic: String = "landsat"
-
-    // Debug
-    args.map(p => println("Print XML File : " + p))
-    // End Debug
-
-
-    // required properties and initialization of Kafka producer
-    props.put("bootstrap.servers", "localhost:9092")
-    props.put("acks", "all")
-    props.put("retries", "0")
-    props.put("batch.size", "16384")
-    props.put("linger.ms", "1")
-    props.put("buffer.memory", "33554432")
-    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-
-    val producer: KafkaStringProducer = new KafkaStringProducer(props)
-    // End producer initialization
-
-    // Local Send function --> will use a special producer to send the buffer
-    def sendMessage (prod: Any, ctopic:String, cmessage: String) : Int = {
-      prod.asInstanceOf[KafkaStringProducer].sendRecord(ctopic, cmessage)
-    }
-    // End Local Send Function
-
-    val xmlFile = args(0)
-    parseXmlAndSendMessage(xmlFile, sendMessage, producer, topic )
-
-
-  }
 
   /**
     * Dedicated to Landsat model parsing
@@ -67,7 +31,7 @@ object XMLKafkaProducer {
     * @param producer A potential producer to send the record
     * @param ctopic the Kafka Topic to send the messag to
     */
-   def parseXmlAndSendMessage (xmlFile: String, send: (Any, String, String) => Int, producer: Any, ctopic: String): Unit = {
+   def parseXmlAndSendMessage (xmlFile: String, send: (String, String, String) => Int, producer: Any, ctopic: String): Unit = {
 
      val cbuf = ArrayBuffer[String]()
      // TODO : manage exception for XML file not found
@@ -87,7 +51,7 @@ object XMLKafkaProducer {
 
            // send message
            if(Some(send).isDefined)
-            send(producer, ctopic, cbuf.toString())
+            send(ctopic, cbuf.toString(), null)
            // end send message
            cbuf.clear
          }
