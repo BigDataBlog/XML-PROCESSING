@@ -5,7 +5,8 @@ package org.thegreenseek.samples.kafka.fwk
   */
 object Constants {
 
-  val KAFKADefaultConsumerProperties = "/DefaultKafkaConsumerProperties.xml"
-  val KAFKADefaultProducerProperties = "/DefaultKafkaProducerProperties.xml"
+  final val KAFKADefaultConsumerProperties = "/DefaultKafkaConsumerProperties.xml"
+  final val KAFKADefaultProducerProperties = "/DefaultKafkaProducerProperties.xml"
+  final val KAFKAConsumerTimeout = 100 // in milliseconds
 
 }

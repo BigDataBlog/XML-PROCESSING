@@ -40,7 +40,7 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, topic
+      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, topic
     )
 
   }
@@ -61,10 +61,25 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     val fwk = new KafkaFramework()
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil1/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml",
+      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml",
       fwk.sendStringRecord, null, topic
     )
 
+  }
+
+  test("readAutocommit") {
+    val topic: String = "landsat"
+    val fwk = new KafkaFramework()
+
+    def printMessage (offset:Long, key:String, value:Any): Int = {
+      println("BUFFER PRINT START READING MESSAGES")
+      println("OFFSET: %l" + offset + " - KEY: %s" + key + " - MESSAGE:")
+      println(value)
+      println("BUFFER PRINT END READING MESSAGES")
+      return 0
+    }
+
+    fwk.readAutocommit(topic,printMessage)
   }
 
 }

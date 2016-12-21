@@ -1,7 +1,15 @@
 package org.thegreenseek.samples.kafka.fwk
 
-import java.util.Properties
+//scala
+//import scala.language.implicitConversions
+import scala.collection.JavaConversions._ //converts java collections to scala collections
 
+import util.control.Breaks._
+//java
+import java.util
+import java.util.Properties
+//Kafka
+import org.apache.kafka.clients.consumer.{ConsumerRecords, KafkaConsumer, ConsumerRecord}
 import org.apache.kafka.clients.producer._
 
 /**
@@ -16,6 +24,7 @@ class KafkaFramework {
     * TODO : investigate the usage of keys in ProducerRecords
     * @param topic
     * @param message
+    * @param sPropertiesSend tries to setup special producer properties
     * @return information telling if anything went wrong
     */
   def sendStringRecord( topic: String, message: String, sPropertiesSend: String): Int = {
@@ -41,10 +50,29 @@ class KafkaFramework {
 
   /**
     * Consume messages from the specified topic with autocommit true.
+    * It uses the default consumer properties
     * @param topicName
-    * @param handle this method witll handle the consumed messages
+    * @param handleCommit this method will handle the consumed messages
     */
-  def readAutocommit(topicName: String, handle:(Int,String, Any ) => Int): Unit = {
+  def readAutocommit(topicName: String, handleCommit:(Long,String, Any ) => Int): Unit = {
+
+    val lProperties = KafkaUtilities.loadDefaultConsumerProperties.head
+
+
+    if(null !=lProperties && null != topicName ) {
+        val consumer = new KafkaConsumer[String,String](lProperties)
+        consumer.subscribe(util.Arrays.asList(topicName))
+        breakable {
+          while (true) {
+            try {
+              val consumerR: ConsumerRecords[String, String] = consumer.poll(Constants.KAFKAConsumerTimeout)
+              consumerR.foreach(record => handleCommit(record.offset, record.key, record.value))
+            } catch {
+              case allDone: Exception => break //TODO Update exception management
+            }
+          }
+        }
+    }
 
   }
 
