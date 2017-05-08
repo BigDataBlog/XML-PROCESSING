@@ -4,7 +4,7 @@ import java.util.Properties
 
 import org.thegreenseek.samples.kafka.fwk
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
-import org.thegreenseek.samples.kafka.fwk.{KafkaFramework, KafkaUtilities}
+import org.thegreenseek.samples.kafka.fwk.{HadoopClient, KafkaClient, KafkaFramework, KafkaUtilities}
 
 import scala.collection.mutable.ArrayBuffer
 import java.io.{BufferedReader, InputStream, InputStreamReader}
@@ -32,7 +32,7 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     val topic: String = "landsat"
 
     // This will be delegated the print of messages to stdout
-    def printMessage (ctopic:String, cmessage:String, cprops:String): Int = {
+    def printMessage (ctopic:String, cmessage:String): Int = {
         println("BUFFER PRINT START")
         println(cmessage)
         println("BUFFER PRINT END")
@@ -40,7 +40,7 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml", printMessage, null, topic
+      HadoopClient.instance().getInpuStream("/user/Macphil1/landsat-small.xml"), printMessage, topic
     )
 
   }
@@ -56,18 +56,16 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
 
   }
 
-  test("parseXmlAndSendMessage" + "KafkaFramework.sendStringRecord") {
+  test("parseXmlAndSendMessage" + "KafkaClient.sendStringRecord") {
     val topic: String = "landsat"
-    val fwk = new KafkaFramework()
 
     XMLKafkaProducer.parseXmlAndSendMessage(
-      "/Users/Macphil11/Documents/Projets/GitHub/XML-PROCESSING/XML-KAFKA-PRODUCER/data/landsat-small.xml",
-      fwk.sendStringRecord, null, topic
-    )
+      HadoopClient.instance().getInpuStream("/user/Macphil1/landsat-small.xml"),
+      KafkaClient.instance().sendStringRecord, topic)
 
   }
 
-  test("readAutocommit") {
+  /*test("readAutocommit") {
     val topic: String = "landsat"
     val fwk = new KafkaFramework()
 
@@ -80,6 +78,6 @@ class XMLKafkaProducer$Test extends FunSuite with BeforeAndAfterEach {
     }
 
     fwk.readAutocommit(topic,printMessage)
-  }
+  }*/
 
 }

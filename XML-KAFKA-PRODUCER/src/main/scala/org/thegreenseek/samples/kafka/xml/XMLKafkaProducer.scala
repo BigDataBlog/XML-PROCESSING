@@ -1,7 +1,9 @@
 package org.thegreenseek.samples.kafka.xml
 
 
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord, Producer}
+import java.io.InputStream
+
+import org.apache.kafka.clients.producer.{KafkaProducer, Producer, ProducerRecord}
 import java.util.Properties
 
 import scala.collection.mutable.ArrayBuffer
@@ -26,16 +28,15 @@ object XMLKafkaProducer {
     * sends message using the provided send method:
     * it optimizes resources usage
     * TODO : test if the send method exist
-    * @param xmlFile
-    * @param send A signature of the method that will send the record to Kafka
-    * @param producer A potential producer to send the record
+    * @param xmlFile input stream targeting the xml file to parse
+    * @param send A signature of the method that will send the record to Kafka (topic,message)
     * @param ctopic the Kafka Topic to send the messag to
     */
-   def parseXmlAndSendMessage (xmlFile: String, send: (String, String, String) => Int, producer: Any, ctopic: String): Unit = {
+   def parseXmlAndSendMessage (xmlFile: InputStream, send: (String, String) => Int, ctopic: String): Unit = {
 
      val cbuf = ArrayBuffer[String]()
      // TODO : manage exception for XML file not found
-     val xml = new XMLEventReader(Source.fromFile(xmlFile))
+     val xml = new XMLEventReader(Source.fromInputStream(xmlFile))
 
      for (event <- xml) {
        event match {
@@ -51,7 +52,7 @@ object XMLKafkaProducer {
 
            // send message
            if(Some(send).isDefined)
-            send(ctopic, cbuf.toString(), null)
+            send(ctopic, cbuf.toString())
            // end send message
            cbuf.clear
          }

@@ -1,0 +1,5 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="hadoop.core-site">/etc/hadoop/core-site.xml</entry>
+    <entry key="hadoop.hdfs-site">/etc/hadoop/core-site.xml</entry>
+</properties>
